@@ -29,10 +29,11 @@ export default function Home() {
   }, [])
 
   async function fetchPrizes() {
-    const res = await fetch('/api/prizes')
+    const res = await fetch('/api/prizes', { cache: 'no-store' })
     const data = await res.json()
     if (Array.isArray(data)) setPrizes(data)
   }
+
 
   async function handleDraw() {
     if (!code.trim()) {
