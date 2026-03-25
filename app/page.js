@@ -13,7 +13,7 @@ const GRADE_COLORS = {
   H: '#888',
 }
 
-const TICKETS_PER_ROW = 20
+const TICKETS_PER_ROW = 100
 
 export default function Home() {
   const [prizes, setPrizes] = useState([])
