@@ -109,7 +109,6 @@ for (let i = 0; i < prize.total; i++) {
       <div className="ticket-body">
         <div className="ticket-stripe-top" />
         <span className="ticket-number">{i + 1}</span>
-        <span className="ticket-unit">번</span>
         <div className="ticket-stripe-bottom" />
       </div>
     </div>
