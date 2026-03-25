@@ -7,7 +7,7 @@
 }
 
 body {
-  background: #d0d0d0;
+  background: #e8e8e8;
   color: #222;
   font-family: 'Noto Sans KR', sans-serif;
   min-height: 100vh;
@@ -15,157 +15,167 @@ body {
 
 /* ===== 메인 페이지 ===== */
 .main-container {
-  max-width: 750px;
+  max-width: 820px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 16px;
 }
 
 .header {
   text-align: center;
-  padding: 24px 0 16px;
-  margin-bottom: 16px;
+  padding: 16px 0 12px;
+  margin-bottom: 8px;
 }
 
 .header h1 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 900;
   color: #222;
-  letter-spacing: 2px;
 }
 
 .header .subtitle {
-  font-size: 0.8rem;
-  color: #666;
-  margin-top: 6px;
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 4px;
 }
 
 .price-tag {
   display: inline-block;
-  background: #e63946;
+  background: #d42b2b;
   color: #fff;
   font-weight: 900;
-  font-size: 1rem;
-  padding: 5px 18px;
-  border-radius: 3px;
-  margin-top: 10px;
+  font-size: 0.9rem;
+  padding: 4px 14px;
+  margin-top: 8px;
 }
 
 .notice-text {
-  font-size: 0.75rem;
-  color: #888;
-  margin-top: 10px;
-  line-height: 1.5;
+  font-size: 0.7rem;
+  color: #999;
+  margin-top: 8px;
 }
 
 /* ===== character placeholder ===== */
 .character-placeholder {
   width: 100%;
-  height: 100px;
-  border: 2px dashed #aaa;
-  border-radius: 8px;
+  height: 80px;
+  border: 1px dashed #bbb;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
-  font-size: 0.85rem;
-  margin-bottom: 16px;
-  background: #c4c4c4;
+  color: #bbb;
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+  background: #ddd;
+}
+
+/* ===== 남은 수량 ===== */
+.remaining-display {
+  text-align: center;
+  padding: 6px;
+  font-size: 0.8rem;
+  color: #555;
+  background: #ddd;
+  border: 1px solid #ccc;
+  margin-bottom: 4px;
+}
+
+.remaining-display strong {
+  color: #d42b2b;
+  font-size: 1rem;
 }
 
 /* ===== 상품 현황판 ===== */
 .prize-board {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-bottom: 24px;
-  background: #bbb;
-  border: 1px solid #999;
+  background: #f2f0ed;
+  border: 1px solid #ccc;
+  margin-bottom: 8px;
 }
 
 .prize-section {
   display: flex;
-  border-bottom: 1px solid #999;
+  align-items: stretch;
+  border-bottom: 1px solid #d5d5d5;
+  min-height: 60px;
 }
 
 .prize-section:last-child {
   border-bottom: none;
 }
 
-/* 왼쪽: 상품 정보 (이미지 + 등급 + 라벨) */
+.sold-out-row {
+  opacity: 0.45;
+}
+
+/* 왼쪽: 상품 정보 */
 .prize-left {
-  width: 160px;
-  min-width: 160px;
+  width: 130px;
+  min-width: 130px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 12px 8px;
-  background: #c8c8c8;
-  border-right: 1px solid #999;
+  padding: 8px 6px;
+  border-right: 1px solid #d5d5d5;
   text-align: center;
+  background: #f2f0ed;
 }
 
 .prize-image-placeholder {
-  width: 100px;
-  height: 80px;
-  border: 1px dashed #999;
-  border-radius: 4px;
+  width: 80px;
+  height: 60px;
+  border: 1px dashed #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
-  font-size: 0.65rem;
-  background: #bbb;
-  margin-bottom: 6px;
+  color: #ccc;
+  font-size: 0.55rem;
+  background: #e8e6e3;
+  margin-bottom: 4px;
 }
 
 .prize-grade-label {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 900;
   color: #222;
-  margin-bottom: 2px;
+  line-height: 1.2;
 }
 
 .prize-grade-letter {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 900;
-  display: inline;
 }
 
 .prize-name {
-  font-size: 0.75rem;
-  color: #444;
+  font-size: 0.7rem;
+  color: #333;
   font-weight: 700;
+  line-height: 1.3;
 }
 
 .prize-count-label {
-  font-size: 0.65rem;
-  color: #777;
-  margin-top: 2px;
+  font-size: 0.6rem;
+  color: #d42b2b;
+  margin-top: 1px;
 }
 
-/* 오른쪽: 복권 슬롯 영역 */
+/* 오른쪽: 티켓 영역 */
 .prize-right {
   flex: 1;
-  padding: 10px 12px;
+  padding: 8px 10px;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 4px;
   align-items: flex-start;
   align-content: flex-start;
-  background: #c0c0c0;
+  background: #f2f0ed;
 }
 
-/* ===== 복권 티켓 모양 ===== */
+/* ===== 복권 티켓 ===== */
 .ticket {
-  width: 52px;
-  height: 44px;
+  width: 48px;
+  height: 36px;
   position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: default;
   flex-shrink: 0;
 }
 
@@ -173,213 +183,170 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
-  background: #f5f5f0;
+  background: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* 왼쪽: 곡선, 오른쪽: 팔각형 꺾임 */
-  border-radius: 8px 2px 2px 8px;
   clip-path: polygon(
-    0% 15%,
-    0% 85%,
-    2% 100%,
-    88% 100%,
-    94% 88%,
-    100% 88%,
-    100% 12%,
-    94% 12%,
-    88% 0%,
-    2% 0%
+    0% 10%,
+    0% 90%,
+    3% 100%,
+    85% 100%,
+    92% 90%,
+    100% 90%,
+    100% 10%,
+    92% 10%,
+    85% 0%,
+    3% 0%
   );
-  border: none;
   overflow: hidden;
 }
 
-.ticket-body::before,
-.ticket-body::after {
-  content: '';
+.ticket-stripe-top,
+.ticket-stripe-bottom {
   position: absolute;
   left: 0;
   right: 0;
   height: 4px;
-  background: #7b5ea7;
+  background: #8b6aad;
 }
 
-.ticket-body::before {
+.ticket-stripe-top {
   top: 0;
 }
 
-.ticket-body::after {
+.ticket-stripe-bottom {
   bottom: 0;
 }
 
 .ticket-number {
   font-size: 0.6rem;
   font-weight: 700;
-  color: #555;
-  margin-top: 2px;
+  color: #444;
+  line-height: 1;
 }
 
 .ticket-unit {
-  font-size: 0.5rem;
-  color: #888;
+  font-size: 0.45rem;
+  color: #999;
+  line-height: 1;
 }
 
 /* 뽑힌 티켓 */
 .ticket.drawn .ticket-body {
-  background: #7b5ea7;
+  background: #8b6aad;
 }
 
-.ticket.drawn .ticket-body::before,
-.ticket.drawn .ticket-body::after {
-  background: #5a3d80;
+.ticket.drawn .ticket-stripe-top,
+.ticket.drawn .ticket-stripe-bottom {
+  background: #6b4d8a;
 }
 
 .ticket.drawn .ticket-number {
   color: #fff;
-  font-size: 0.55rem;
 }
 
 .ticket.drawn .ticket-unit {
   color: #ddd;
 }
 
-/* 종료 스티커 */
-.ticket.drawn .ticket-body::after {
-  content: '';
-}
-
-.sold-out-row {
-  opacity: 0.5;
-}
-
-/* ===== 구분선 텍스트 ===== */
-.pop-notice {
-  font-size: 0.6rem;
-  color: #888;
-  text-align: right;
-  padding: 2px 8px;
-  background: #b8b8b8;
-  border-bottom: 1px solid #999;
-}
-
 /* ===== 라스트원상 ===== */
 .last-one-section {
-  background: #c8c8c8;
-  border: 2px solid #e63946;
-  padding: 16px;
+  background: #f2f0ed;
+  border: 2px solid #d42b2b;
+  padding: 12px;
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .last-one-section h3 {
-  color: #e63946;
-  font-size: 1.1rem;
+  color: #d42b2b;
+  font-size: 1rem;
   font-weight: 900;
 }
 
 .last-one-section p {
   color: #555;
-  font-size: 0.8rem;
-  margin-top: 6px;
+  font-size: 0.75rem;
+  margin-top: 4px;
 }
 
 .last-one-section .status {
-  margin-top: 8px;
+  margin-top: 6px;
   font-weight: 700;
-  font-size: 0.9rem;
-  color: #e63946;
+  font-size: 0.85rem;
+  color: #d42b2b;
 }
 
 /* ===== 뽑기 섹션 ===== */
 .draw-section {
-  background: #c8c8c8;
-  border: 1px solid #999;
-  border-radius: 4px;
-  padding: 24px;
+  background: #f2f0ed;
+  border: 1px solid #ccc;
+  padding: 20px;
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .draw-section h2 {
   color: #333;
-  font-size: 1.1rem;
-  margin-bottom: 16px;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  font-weight: 700;
 }
 
 .code-input {
   background: #fff;
-  border: 2px solid #999;
-  border-radius: 4px;
+  border: 2px solid #bbb;
+  border-radius: 2px;
   color: #222;
   font-size: 1.1rem;
-  padding: 10px 18px;
-  width: 260px;
+  padding: 8px 16px;
+  width: 240px;
   text-align: center;
   outline: none;
-  transition: border-color 0.3s;
   font-family: monospace;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 }
 
 .code-input:focus {
-  border-color: #7b5ea7;
+  border-color: #8b6aad;
 }
 
 .draw-btn {
   display: inline-block;
-  background: #e63946;
+  background: #d42b2b;
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 900;
-  padding: 10px 36px;
+  padding: 8px 32px;
   border: none;
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
-  margin-top: 14px;
-  transition: all 0.2s;
-  letter-spacing: 1px;
+  margin-top: 10px;
+  transition: background 0.2s;
 }
 
 .draw-btn:hover {
-  background: #c5303c;
-  transform: translateY(-1px);
+  background: #b82525;
 }
 
 .draw-btn:disabled {
-  background: #999;
+  background: #aaa;
   cursor: not-allowed;
-  transform: none;
 }
 
 .error-message {
-  color: #e63946;
-  margin-top: 10px;
-  font-size: 0.85rem;
+  color: #d42b2b;
+  margin-top: 8px;
+  font-size: 0.8rem;
 }
 
 .sold-out-message {
-  color: #e63946;
-  font-size: 1.1rem;
+  color: #d42b2b;
+  font-size: 1rem;
   font-weight: 700;
-  padding: 16px;
-}
-
-/* ===== 남은 수량 표시 ===== */
-.remaining-display {
-  text-align: center;
-  padding: 10px;
-  font-size: 0.85rem;
-  color: #555;
-  background: #b8b8b8;
-  border: 1px solid #999;
-  margin-bottom: 24px;
-}
-
-.remaining-display strong {
-  color: #e63946;
-  font-size: 1.1rem;
+  padding: 12px;
 }
 
 /* ===== 결과 모달 ===== */
@@ -389,7 +356,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -403,12 +370,12 @@ body {
 }
 
 .modal-content {
-  background: #f0f0f0;
-  border: 3px solid #7b5ea7;
-  border-radius: 8px;
-  padding: 36px;
+  background: #f9f8f6;
+  border: 3px solid #8b6aad;
+  border-radius: 4px;
+  padding: 32px;
   text-align: center;
-  max-width: 400px;
+  max-width: 380px;
   width: 90%;
   animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -419,39 +386,37 @@ body {
 }
 
 .modal-grade {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   font-weight: 900;
-  margin-bottom: 8px;
-  color: #7b5ea7;
-}
-
-.modal-label {
-  font-size: 1.2rem;
-  color: #333;
-  font-weight: 700;
   margin-bottom: 6px;
 }
 
+.modal-label {
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
 .modal-message {
-  font-size: 0.85rem;
-  color: #666;
-  margin-bottom: 20px;
+  font-size: 0.8rem;
+  color: #777;
+  margin-bottom: 18px;
 }
 
 .modal-close-btn {
-  background: #7b5ea7;
+  background: #8b6aad;
   color: #fff;
   border: none;
-  padding: 10px 28px;
-  border-radius: 4px;
-  font-size: 0.95rem;
+  padding: 8px 24px;
+  border-radius: 2px;
+  font-size: 0.9rem;
   cursor: pointer;
   font-weight: 700;
-  transition: background 0.3s;
 }
 
 .modal-close-btn:hover {
-  background: #5a3d80;
+  background: #6b4d8a;
 }
 
 /* ===== 어드민 ===== */
@@ -468,8 +433,8 @@ body {
 }
 
 .admin-section {
-  background: #e0e0e0;
-  border: 1px solid #aaa;
+  background: #f2f0ed;
+  border: 1px solid #ccc;
   border-radius: 4px;
   padding: 20px;
   margin-bottom: 20px;
@@ -483,8 +448,8 @@ body {
 
 .admin-input {
   background: #fff;
-  border: 1px solid #aaa;
-  border-radius: 4px;
+  border: 1px solid #bbb;
+  border-radius: 2px;
   color: #222;
   padding: 10px 14px;
   font-size: 1rem;
@@ -494,31 +459,30 @@ body {
 }
 
 .admin-input:focus {
-  border-color: #7b5ea7;
+  border-color: #8b6aad;
 }
 
 .admin-btn {
-  background: #7b5ea7;
+  background: #8b6aad;
   color: #fff;
   font-weight: 700;
   padding: 10px 24px;
   border: none;
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
   font-size: 0.95rem;
-  transition: background 0.3s;
 }
 
 .admin-btn:hover {
-  background: #5a3d80;
+  background: #6b4d8a;
 }
 
 .admin-btn.danger {
-  background: #e63946;
+  background: #d42b2b;
 }
 
 .admin-btn.danger:hover {
-  background: #c5303c;
+  background: #b82525;
 }
 
 .code-list {
@@ -533,14 +497,14 @@ body {
   align-items: center;
   padding: 8px 12px;
   background: #fff;
-  border-radius: 4px;
-  margin-bottom: 6px;
+  border-radius: 2px;
+  margin-bottom: 4px;
   font-size: 0.85rem;
 }
 
 .code-item .code-text {
   font-family: monospace;
-  color: #7b5ea7;
+  color: #8b6aad;
   font-weight: 700;
 }
 
@@ -549,16 +513,16 @@ body {
 }
 
 .code-item .code-status.used {
-  color: #e63946;
+  color: #d42b2b;
 }
 
 .login-form {
   max-width: 400px;
   margin: 100px auto;
   text-align: center;
-  background: #e0e0e0;
+  background: #f2f0ed;
   padding: 40px;
-  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
 .login-form h1 {
@@ -568,11 +532,13 @@ body {
 
 /* ===== 반응형 ===== */
 @media (max-width: 600px) {
-  .header h1 { font-size: 1.4rem; }
-  .prize-left { width: 110px; min-width: 110px; }
-  .prize-image-placeholder { width: 70px; height: 56px; }
-  .ticket { width: 44px; height: 38px; }
+  .header h1 { font-size: 1.3rem; }
+  .prize-left { width: 100px; min-width: 100px; padding: 6px 4px; }
+  .prize-image-placeholder { width: 60px; height: 45px; }
+  .prize-grade-letter { font-size: 1rem; }
+  .prize-name { font-size: 0.6rem; }
+  .ticket { width: 40px; height: 30px; }
   .ticket-number { font-size: 0.5rem; }
+  .ticket-unit { font-size: 0.4rem; }
   .code-input { width: 100%; }
-  .prize-grade-letter { font-size: 1.1rem; }
 }
