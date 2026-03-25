@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react'
 
 const GRADE_COLORS = {
-  A: '#ffd700',
-  B: '#ff6b6b',
-  C: '#ff9ff3',
-  D: '#48dbfb',
-  E: '#1dd1a1',
-  F: '#a29bfe',
-  G: '#fd79a8',
-  H: '#b2bec3',
+  A: '#e63946',
+  B: '#e63946',
+  C: '#d4548a',
+  D: '#3a86a8',
+  E: '#2a9d8f',
+  F: '#7b5ea7',
+  G: '#c47daa',
+  H: '#777',
 }
 
 export default function Home() {
@@ -19,23 +19,15 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
-  const [drawnCodes, setDrawnCodes] = useState([])
 
   useEffect(() => {
     fetchPrizes()
-    fetchDrawnCodes()
   }, [])
 
   async function fetchPrizes() {
     const res = await fetch('/api/prizes')
     const data = await res.json()
     if (Array.isArray(data)) setPrizes(data)
-  }
-
-  async function fetchDrawnCodes() {
-    // 공개 조회: 뽑힌 결과만 가져오기
-    const res = await fetch('/api/prizes')
-    // drawn codes는 prizes에서 total - remaining으로 계산
   }
 
   async function handleDraw() {
@@ -87,44 +79,69 @@ export default function Home() {
         <h1>커미션 복권</h1>
         <div className="subtitle">YOIY 커미션용 복권</div>
         <div className="price-tag">1회 ₩10,000</div>
+        <div className="notice-text">
+          각 등상의 상품이 소진되면 종료 표시가 됩니다.
+        </div>
+      </div>
+
+      {/* 남은 수량 */}
+      <div className="remaining-display">
+        남은 복권: <strong>{totalRemaining}</strong> / {totalAll}장
       </div>
 
       {/* 상품 현황판 */}
       <div className="prize-board">
         {prizes.map((prize) => {
           const drawn = prize.total - prize.remaining
-          const slots = []
+          const isSoldOut = prize.remaining === 0
+
+          const tickets = []
           for (let i = 0; i < prize.total; i++) {
-            slots.push(
-              <div key={i} className={`slot ${i < drawn ? 'drawn' : ''}`}>
-                {i < drawn ? '끝' : ''}
+            const isDrawn = i < drawn
+            tickets.push(
+              <div key={i} className={`ticket ${isDrawn ? 'drawn' : ''}`}>
+                <div className="ticket-body">
+                  <span className="ticket-number">{i + 1}</span>
+                  <span className="ticket-unit">번</span>
+                </div>
               </div>
             )
           }
 
           return (
-            <div
-              key={prize.grade}
-              className={`prize-row grade-${prize.grade} ${prize.remaining === 0 ? 'sold-out' : ''}`}
-            >
-              <div className="prize-grade">{prize.grade}</div>
-              <div className="prize-info">
-                <div className="prize-label">{prize.label}</div>
-                <div className="prize-count">
-                  잔여 {prize.remaining}/{prize.total}
+            <div key={prize.grade}>
+              <div className={`prize-section ${isSoldOut ? 'sold-out-row' : ''}`}>
+                {/* 왼쪽: 상품 정보 */}
+                <div className="prize-left">
+                  <div className="prize-image-placeholder">[ 이미지 ]</div>
+                  <div className="prize-grade-label">
+                    <span className="prize-grade-letter" style={{ color: GRADE_COLORS[prize.grade] }}>
+                      {prize.grade}
+                    </span>
+                    <span>상</span>
+                  </div>
+                  <div className="prize-name">{prize.label}</div>
+                  <div className="prize-count-label">
+                    전 {prize.total}개
+                    {isSoldOut && ' — 종료'}
+                  </div>
+                </div>
+
+                {/* 오른쪽: 복권 슬롯 */}
+                <div className="prize-right">
+                  {tickets}
                 </div>
               </div>
-              <div className="prize-slots">{slots}</div>
             </div>
           )
         })}
       </div>
 
       {/* 라스트원상 */}
-      <div className="last-one-banner">
-        <h3>🏆 라스트원상</h3>
+      <div className="last-one-section">
+        <h3>라스트원상</h3>
         <p>원하는 대로 — 마지막 1장을 뽑은 분에게!</p>
-        <div className="status" style={{ color: allSoldOut ? '#ff6b6b' : '#c4a24e' }}>
+        <div className="status">
           {allSoldOut ? '종료!' : `남은 복권: ${totalRemaining}장`}
         </div>
       </div>
@@ -139,7 +156,7 @@ export default function Home() {
             <input
               type="text"
               className="code-input"
-              placeholder="코드 입력"
+              placeholder="XXXXXXXX"
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
               onKeyDown={handleKeyDown}
@@ -164,13 +181,13 @@ export default function Home() {
         <div className="modal-overlay" onClick={() => setResult(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             {result.isLastOne && (
-              <div style={{ color: '#ffd700', fontSize: '1rem', fontWeight: 700, marginBottom: 10 }}>
+              <div style={{ color: '#e63946', fontSize: '1rem', fontWeight: 700, marginBottom: 10 }}>
                 🏆 라스트원상 획득!
               </div>
             )}
             <div
               className="modal-grade"
-              style={{ color: GRADE_COLORS[result.grade] || '#fff' }}
+              style={{ color: GRADE_COLORS[result.grade] || '#7b5ea7' }}
             >
               {result.grade}상
             </div>
