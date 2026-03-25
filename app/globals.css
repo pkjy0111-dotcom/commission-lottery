@@ -134,10 +134,11 @@ body {
 }
 
 .ticket-row .ticket {
-  margin-right: -12px;
+  margin-right: -31px;
   margin-left: 0;
   position: relative;
 }
+
 
 .ticket-row .ticket:last-child {
   margin-right: 0;
