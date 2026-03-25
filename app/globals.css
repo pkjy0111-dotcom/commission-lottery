@@ -134,7 +134,7 @@ body {
 }
 
 .ticket-row .ticket {
-  margin-right: -13px;
+  margin-right: -10px;
   margin-left: 0;
   position: relative;
 }
@@ -192,7 +192,10 @@ body {
   font-weight: 700;
   color: #444;
   line-height: 1;
+  position: relative;
+  left: -3px;
 }
+
 
 .ticket-unit {
   font-size: 0.4rem;
