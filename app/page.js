@@ -21,6 +21,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
+  const [flipping, setFlipping] = useState(false)
+  const [showResult, setShowResult] = useState(false)
 
   useEffect(() => {
     fetchPrizes()
@@ -39,6 +41,10 @@ export default function Home() {
     }
     setLoading(true)
     setError('')
+    setResult(null)
+    setShowResult(false)
+    setFlipping(false)
+
     try {
       const res = await fetch('/api/draw', {
         method: 'POST',
@@ -48,11 +54,18 @@ export default function Home() {
       const data = await res.json()
       if (!res.ok) {
         setError(data.error)
+        setLoading(false)
         return
       }
       setResult(data)
       setCode('')
-      fetchPrizes()
+      // 카드 뒤집기 연출 시작
+      setFlipping(true)
+      setTimeout(() => {
+        setShowResult(true)
+        setFlipping(false)
+        fetchPrizes()
+      }, 1500)
     } catch (e) {
       setError('서버 오류가 발생했습니다.')
     } finally {
@@ -62,6 +75,12 @@ export default function Home() {
 
   function handleKeyDown(e) {
     if (e.key === 'Enter') handleDraw()
+  }
+
+  function closeResult() {
+    setResult(null)
+    setShowResult(false)
+    setFlipping(false)
   }
 
   function chunkArray(arr, size) {
@@ -113,28 +132,26 @@ export default function Home() {
                 {rows.map((row, rowIdx) => (
                   <div className="ticket-row" key={rowIdx}>
                     {row.map((t, idx) => {
-  const isFirst = idx === 0
-  const isLast = idx === row.length - 1
-  return (
-    <div
-      key={t.number}
-      className={`ticket ${t.isDrawn ? 'drawn' : ''}`}
-      style={{ zIndex: row.length - idx }}
-    >
-      <div className="ticket-body" style={{
-        alignItems: isFirst ? 'center' : 'flex-end',
-        paddingRight: isFirst ? '0px' : '10px',
-      }}>
-        <div className="ticket-stripe-top" />
-        <span className="ticket-number">
-          {t.number}
-        </span>
-        <div className="ticket-stripe-bottom" />
-      </div>
-    </div>
-  )
-})}
-
+                      const isFirst = idx === 0
+                      return (
+                        <div
+                          key={t.number}
+                          className={`ticket ${t.isDrawn ? 'drawn' : ''}`}
+                          style={{ zIndex: row.length - idx }}
+                        >
+                          <div className="ticket-body" style={{
+                            alignItems: isFirst ? 'center' : 'flex-end',
+                            paddingRight: isFirst ? '0px' : '3px',
+                          }}>
+                            <div className="ticket-stripe-top" />
+                            <span className="ticket-number">
+                              {t.number}
+                            </span>
+                            <div className="ticket-stripe-bottom" />
+                          </div>
+                        </div>
+                      )
+                    })}
                   </div>
                 ))}
               </div>
@@ -162,11 +179,11 @@ export default function Home() {
               value={code}
               onChange={e => setCode(e.target.value.toUpperCase())}
               onKeyDown={handleKeyDown}
-              disabled={loading}
+              disabled={loading || flipping}
               maxLength={8}
             />
             <br />
-            <button className="draw-btn" onClick={handleDraw} disabled={loading}>
+            <button className="draw-btn" onClick={handleDraw} disabled={loading || flipping}>
               {loading ? '추첨 중...' : '뽑기!'}
             </button>
             {error && <div className="error-message">{error}</div>}
@@ -174,18 +191,31 @@ export default function Home() {
         )}
       </div>
 
-      {result && (
-        <div className="modal-overlay" onClick={() => setResult(null)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            {result.isLastOne && (
-              <div style={{ color: '#7b5ea7', fontSize: '1rem', fontWeight: 700, marginBottom: 10 }}>
-                🏆 라스트원상 획득!
+      {/* 카드 뒤집기 연출 */}
+      {(flipping || showResult) && result && (
+        <div className="modal-overlay" onClick={showResult ? closeResult : undefined}>
+          <div className={`flip-card ${showResult ? 'flipped' : ''}`} onClick={e => e.stopPropagation()}>
+            <div className="flip-card-inner">
+              {/* 카드 뒷면 (뒤집기 전) */}
+              <div className="flip-card-back">
+                <div className="card-back-design">
+                  <div className="card-back-text">커미션 복권</div>
+                  <div className="card-back-sub">YOIY</div>
+                </div>
               </div>
-            )}
-            <div className="modal-grade" style={{ color: GRADE_COLORS[result.grade] || '#8b6aad' }}>{result.grade}상</div>
-            <div className="modal-label">{result.label}</div>
-            <div className="modal-message">{result.isLastOne ? '축하합니다! 라스트원상까지 획득하셨습니다!' : '당첨을 축하합니다!'}</div>
-            <button className="modal-close-btn" onClick={() => setResult(null)}>확인</button>
+              {/* 카드 앞면 (결과) */}
+              <div className="flip-card-front">
+                {result.isLastOne && (
+                  <div style={{ color: '#7b5ea7', fontSize: '0.9rem', fontWeight: 700, marginBottom: 8 }}>
+                    🏆 라스트원상 획득!
+                  </div>
+                )}
+                <div className="modal-grade" style={{ color: GRADE_COLORS[result.grade] || '#8b6aad' }}>{result.grade}상</div>
+                <div className="modal-label">{result.label}</div>
+                <div className="modal-message">{result.isLastOne ? '축하합니다! 라스트원상까지 획득하셨습니다!' : '당첨을 축하합니다!'}</div>
+                {showResult && <button className="modal-close-btn" onClick={closeResult}>확인</button>}
+              </div>
+            </div>
           </div>
         </div>
       )}
