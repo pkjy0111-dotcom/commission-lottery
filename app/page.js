@@ -29,16 +29,16 @@ export default function Home() {
   }, [])
 
   async function fetchPrizes() {
-    const res = await fetch('/api/prizes')
-    const data = await res.json()
-    if (Array.isArray(data)) setPrizes(data)
-  }
-
-    async function fetchPrizes() {
     const res = await fetch('/api/prizes?t=' + Date.now(), { cache: 'no-store' })
     const data = await res.json()
     if (Array.isArray(data)) setPrizes(data)
   }
+
+  async function handleDraw() {
+    if (!code.trim()) {
+      setError('코드를 입력해주세요.')
+      return
+    }
     setLoading(true)
     setError('')
     setResult(null)
@@ -57,11 +57,9 @@ export default function Home() {
         setLoading(false)
         return
       }
-       setResult(data)
+      setResult(data)
       setCode('')
-      // 즉시 prizes 갱신
       await fetchPrizes()
-      // 카드 뒤집기 연출 시작
       setFlipping(true)
       setTimeout(() => {
         setShowResult(true)
@@ -192,19 +190,16 @@ export default function Home() {
         )}
       </div>
 
-      {/* 카드 뒤집기 연출 */}
       {(flipping || showResult) && result && (
         <div className="modal-overlay" onClick={showResult ? closeResult : undefined}>
           <div className={`flip-card ${showResult ? 'flipped' : ''}`} onClick={e => e.stopPropagation()}>
             <div className="flip-card-inner">
-              {/* 카드 뒷면 (뒤집기 전) */}
               <div className="flip-card-back">
                 <div className="card-back-design">
                   <div className="card-back-text">커미션 복권</div>
                   <div className="card-back-sub">YOIY</div>
                 </div>
               </div>
-              {/* 카드 앞면 (결과) */}
               <div className="flip-card-front">
                 {result.isLastOne && (
                   <div style={{ color: '#7b5ea7', fontSize: '0.9rem', fontWeight: 700, marginBottom: 8 }}>
