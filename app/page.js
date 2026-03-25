@@ -96,12 +96,52 @@ export default function Home() {
           const drawn = prize.total - prize.remaining
           const isSoldOut = prize.remaining === 0
 
-          // Build ticket array
-const allTickets = []
-for (let i = 0; i < prize.total; i++) {
-  const isDrawn = i < drawn
-  allTickets.push({ isDrawn, number: i + 1 })
-}
+                   // Build ticket data
+          const allTickets = []
+          for (let i = 0; i < prize.total; i++) {
+            allTickets.push({ isDrawn: i < drawn, number: i + 1 })
+          }
+
+          const rows = chunkArray(allTickets, TICKETS_PER_ROW)
+
+          return (
+            <div className={`prize-section ${isSoldOut ? 'sold-out-row' : ''}`} key={prize.grade}>
+              <div className="prize-left">
+                <div className="prize-grade-label">
+                  <span className="prize-grade-letter" style={{ color: GRADE_COLORS[prize.grade] }}>{prize.grade}</span> 상
+                </div>
+                <div className="prize-name">{prize.label}</div>
+                <div className="prize-count-label">전 {prize.total}개</div>
+              </div>
+              <div className="prize-right">
+                {rows.map((row, rowIdx) => (
+                  <div className="ticket-row" key={rowIdx}>
+                    {row.map((t, idx) => {
+                      const isLast = idx === row.length - 1
+                      return (
+                        <div
+                          key={t.number}
+                          className={`ticket ${t.isDrawn ? 'drawn' : ''}`}
+                          style={{ zIndex: row.length - idx }}
+                        >
+                          <div className="ticket-body">
+                            <div className="ticket-stripe-top" />
+                            <span
+                              className="ticket-number"
+                              style={{ position: 'relative', left: isLast ? '0px' : '-10px' }}
+                            >
+                              {t.number}
+                            </span>
+                            <div className="ticket-stripe-bottom" />
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
 
 // Split into rows of TICKETS_PER_ROW
 const rows = chunkArray(allTickets, TICKETS_PER_ROW)
