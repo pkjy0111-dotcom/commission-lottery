@@ -57,15 +57,17 @@ export default function Home() {
         setLoading(false)
         return
       }
-      setResult(data)
+           setResult(data)
       setCode('')
+      // 즉시 prizes 갱신
+      await fetchPrizes()
       // 카드 뒤집기 연출 시작
       setFlipping(true)
       setTimeout(() => {
         setShowResult(true)
         setFlipping(false)
-        fetchPrizes()
       }, 1500)
+
     } catch (e) {
       setError('서버 오류가 발생했습니다.')
     } finally {
