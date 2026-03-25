@@ -1,8 +1,8 @@
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
 
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 // 서버 사이드에서는 service_role key를 사용해야 RLS 우회 가능
 const supabaseAdmin = createClient(
