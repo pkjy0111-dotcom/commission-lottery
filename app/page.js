@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react'
 
 const GRADE_COLORS = {
-  A: '#d42b2b',
-  B: '#d42b2b',
-  C: '#c44d8a',
-  D: '#3a7ea8',
-  E: '#2a8d7f',
-  F: '#8b6aad',
-  G: '#c47daa',
-  H: '#777',
+  A: '#7b5ea7',
+  B: '#7b5ea7',
+  C: '#7b5ea7',
+  D: '#7b5ea7',
+  E: '#7b5ea7',
+  F: '#7b5ea7',
+  G: '#7b5ea7',
+  H: '#7b5ea7',
 }
 
 export default function Home() {
@@ -71,14 +71,41 @@ export default function Home() {
   const totalAll = prizes.reduce((sum, p) => sum + p.total, 0)
   const allSoldOut = totalRemaining === 0
 
+  // 티켓을 10개씩 행으로 나누기
+  function renderTickets(prize) {
+    const drawn = prize.total - prize.remaining
+    const allTickets = []
+    for (let i = 0; i < prize.total; i++) {
+      allTickets.push(
+        <div key={i} className={`ticket ${i < drawn ? 'drawn' : ''}`}>
+          <div className="ticket-body">
+            <div className="ticket-stripe-top" />
+            <span className="ticket-number">{i + 1}</span>
+            <span className="ticket-unit">번</span>
+            <div className="ticket-stripe-bottom" />
+          </div>
+        </div>
+      )
+    }
+
+    // 10개씩 행으로 묶기
+    const rows = []
+    for (let i = 0; i < allTickets.length; i += 10) {
+      rows.push(
+        <div key={i} className="ticket-row">
+          {allTickets.slice(i, i + 10)}
+        </div>
+      )
+    }
+    return rows
+  }
+
   return (
     <div className="main-container">
       {/* 헤더 */}
       <div className="header">
-        <div className="character-placeholder">[ 캐릭터 이미지 영역 ]</div>
         <h1>커미션 복권</h1>
         <div className="subtitle">YOIY 커미션용 복권</div>
-        <div className="price-tag">1회 ₩10,000</div>
         <div className="notice-text">
           각 등상의 상품이 소진되면 종료 표시가 됩니다.
         </div>
@@ -92,28 +119,11 @@ export default function Home() {
       {/* 상품 현황판 */}
       <div className="prize-board">
         {prizes.map((prize) => {
-          const drawn = prize.total - prize.remaining
           const isSoldOut = prize.remaining === 0
-
-          const tickets = []
-          for (let i = 0; i < prize.total; i++) {
-            const isDrawn = i < drawn
-            tickets.push(
-              <div key={i} className={`ticket ${isDrawn ? 'drawn' : ''}`}>
-                <div className="ticket-body">
-                  <div className="ticket-stripe-top" />
-                  <span className="ticket-number">{i + 1}</span>
-                  <span className="ticket-unit">번</span>
-                  <div className="ticket-stripe-bottom" />
-                </div>
-              </div>
-            )
-          }
 
           return (
             <div className={`prize-section ${isSoldOut ? 'sold-out-row' : ''}`} key={prize.grade}>
               <div className="prize-left">
-                <div className="prize-image-placeholder">[ 이미지 ]</div>
                 <div className="prize-grade-label">
                   <span className="prize-grade-letter" style={{ color: GRADE_COLORS[prize.grade] }}>
                     {prize.grade}
@@ -124,7 +134,7 @@ export default function Home() {
                 <div className="prize-count-label">전 {prize.total}개</div>
               </div>
               <div className="prize-right">
-                {tickets}
+                {renderTickets(prize)}
               </div>
             </div>
           )
@@ -175,13 +185,13 @@ export default function Home() {
         <div className="modal-overlay" onClick={() => setResult(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             {result.isLastOne && (
-              <div style={{ color: '#d42b2b', fontSize: '1rem', fontWeight: 700, marginBottom: 10 }}>
+              <div style={{ color: '#7b5ea7', fontSize: '1rem', fontWeight: 700, marginBottom: 10 }}>
                 🏆 라스트원상 획득!
               </div>
             )}
             <div
               className="modal-grade"
-              style={{ color: GRADE_COLORS[result.grade] || '#8b6aad' }}
+              style={{ color: '#7b5ea7' }}
             >
               {result.grade}상
             </div>
