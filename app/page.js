@@ -147,29 +147,7 @@ return (
 
 
 
-          // Split into rows of TICKETS_PER_ROW
-          const rows = chunkArray(allTickets, TICKETS_PER_ROW)
-
-          return (
-            <div className={`prize-section ${isSoldOut ? 'sold-out-row' : ''}`} key={prize.grade}>
-              <div className="prize-left">
-                <div className="prize-grade-label">
-                  <span className="prize-grade-letter" style={{ color: GRADE_COLORS[prize.grade] }}>{prize.grade}</span> 상
-                </div>
-                <div className="prize-name">{prize.label}</div>
-                <div className="prize-count-label">전 {prize.total}개</div>
-              </div>
-              <div className="prize-right">
-                {rows.map((row, rowIdx) => (
-                  <div className="ticket-row" key={rowIdx}>
-                    {row}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )
-        })}
-      </div>
+        
 
       {/* Last one */}
       <div className="last-one-section">
