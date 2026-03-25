@@ -113,26 +113,28 @@ export default function Home() {
                 {rows.map((row, rowIdx) => (
                   <div className="ticket-row" key={rowIdx}>
                     {row.map((t, idx) => {
-                      const isLast = idx === row.length - 1
-                      return (
-                        <div
-                          key={t.number}
-                          className={`ticket ${t.isDrawn ? 'drawn' : ''}`}
-                          style={{ zIndex: row.length - idx }}
-                        >
-                          <div className="ticket-body">
-                            <div className="ticket-stripe-top" />
-                            <span
-                              className="ticket-number"
-                              style={{ position: 'relative', left: isLast ? '0px' : '-10px' }}
-                            >
-                              {t.number}
-                            </span>
-                            <div className="ticket-stripe-bottom" />
-                          </div>
-                        </div>
-                      )
-                    })}
+  const isFirst = idx === 0
+  const isLast = idx === row.length - 1
+  return (
+    <div
+      key={t.number}
+      className={`ticket ${t.isDrawn ? 'drawn' : ''}`}
+      style={{ zIndex: row.length - idx }}
+    >
+      <div className="ticket-body" style={{
+        alignItems: isFirst ? 'center' : 'flex-end',
+        paddingRight: isFirst ? '0px' : '3px',
+      }}>
+        <div className="ticket-stripe-top" />
+        <span className="ticket-number">
+          {t.number}
+        </span>
+        <div className="ticket-stripe-bottom" />
+      </div>
+    </div>
+  )
+})}
+
                   </div>
                 ))}
               </div>
