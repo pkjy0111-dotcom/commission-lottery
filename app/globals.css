@@ -134,13 +134,15 @@ body {
 }
 
 .ticket-row .ticket {
-  margin-left: -12px;
+  margin-right: -12px;
+  margin-left: 0;
   position: relative;
 }
 
-.ticket-row .ticket:first-child {
-  margin-left: 0;
+.ticket-row .ticket:last-child {
+  margin-right: 0;
 }
+
 
 /* Ticket shape */
 .ticket {
