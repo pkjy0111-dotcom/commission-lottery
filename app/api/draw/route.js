@@ -68,21 +68,22 @@ export async function POST(request) {
   }
 
   // 6. 코드 사용 처리
+  const isLastOne = totalRemaining === 1
   const { error: updateCodeError } = await supabaseAdmin
     .from('codes')
     .update({
       used: true,
-      result: chosen.grade,
+      result: isLastOne ? chosen.grade + ' + 라스트원상' : chosen.grade,
       used_at: new Date().toISOString()
     })
     .eq('id', codeData.id)
+
 
   if (updateCodeError) {
     return NextResponse.json({ error: '서버 오류가 발생했습니다.' }, { status: 500 })
   }
 
-  // 7. 라스트원 체크: 이번 뽑기로 전체 잔여가 0이 되면 라스트원상
-  const isLastOne = totalRemaining === 1
+
 
   return NextResponse.json({
     grade: chosen.grade,
