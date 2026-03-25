@@ -123,7 +123,7 @@ export default function Home() {
     >
       <div className="ticket-body" style={{
         alignItems: isFirst ? 'center' : 'flex-end',
-        paddingRight: isFirst ? '0px' : '3px',
+        paddingRight: isFirst ? '0px' : '5px',
       }}>
         <div className="ticket-stripe-top" />
         <span className="ticket-number">
