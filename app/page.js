@@ -64,10 +64,6 @@ export default function Home() {
     if (e.key === 'Enter') handleDraw()
   }
 
-  const totalRemaining = prizes.reduce((sum, p) => sum + p.remaining, 0)
-  const totalAll = prizes.reduce((sum, p) => sum + p.total, 0)
-  const allSoldOut = totalRemaining === 0
-
   function chunkArray(arr, size) {
     const chunks = []
     for (let i = 0; i < arr.length; i += size) {
@@ -76,27 +72,27 @@ export default function Home() {
     return chunks
   }
 
+  const totalRemaining = prizes.reduce((sum, p) => sum + p.remaining, 0)
+  const totalAll = prizes.reduce((sum, p) => sum + p.total, 0)
+  const allSoldOut = totalRemaining === 0
+
   return (
     <div className="main-container">
-      {/* Header */}
       <div className="header">
         <h1>커미션 복권</h1>
         <div className="subtitle">YOIY 커미션용 복권</div>
         <div className="notice-text">각 등상의 상품이 소진되면 종료 표시가 됩니다.</div>
       </div>
 
-      {/* Remaining */}
       <div className="remaining-display">
         남은 복권: <strong>{totalRemaining}</strong> / {totalAll}장
       </div>
 
-      {/* Prize board */}
       <div className="prize-board">
         {prizes.map(prize => {
           const drawn = prize.total - prize.remaining
           const isSoldOut = prize.remaining === 0
 
-                   // Build ticket data
           const allTickets = []
           for (let i = 0; i < prize.total; i++) {
             allTickets.push({ isDrawn: i < drawn, number: i + 1 })
@@ -142,61 +138,15 @@ export default function Home() {
               </div>
             </div>
           )
-
-// Split into rows of TICKETS_PER_ROW
-const rows = chunkArray(allTickets, TICKETS_PER_ROW)
-
-return (
-  <div className={`prize-section ${isSoldOut ? 'sold-out-row' : ''}`} key={prize.grade}>
-    <div className="prize-left">
-      <div className="prize-grade-label">
-        <span className="prize-grade-letter" style={{ color: GRADE_COLORS[prize.grade] }}>{prize.grade}</span> 상
+        })}
       </div>
-      <div className="prize-name">{prize.label}</div>
-      <div className="prize-count-label">전 {prize.total}개</div>
-    </div>
-    <div className="prize-right">
-      {rows.map((row, rowIdx) => (
-        <div className="ticket-row" key={rowIdx}>
-          {row.map((t, idx) => {
-            const isLast = idx === row.length - 1
-            return (
-              <div
-                key={t.number}
-                className={`ticket ${t.isDrawn ? 'drawn' : ''}`}
-                style={{ zIndex: row.length - idx }}
-              >
-                <div className="ticket-body">
-                  <div className="ticket-stripe-top" />
-                  <span
-                    className="ticket-number"
-                    style={{ position: 'relative', left: isLast ? '0px' : '-10px' }}
-                  >
-                    {t.number}
-                  </span>
-                  <div className="ticket-stripe-bottom" />
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      ))}
-    </div>
-  </div>
-)
 
-
-
-        
-
-      {/* Last one */}
       <div className="last-one-section">
         <h3>라스트원상</h3>
         <p>원하는 대로 — 마지막 1장을 뽑은 분에게!</p>
         <div className="status">{allSoldOut ? '종료!' : `남은 복권: ${totalRemaining}장`}</div>
       </div>
 
-      {/* Draw section */}
       <div className="draw-section">
         {allSoldOut ? (
           <div className="sold-out-message">모든 복권이 소진되었습니다!</div>
@@ -222,7 +172,6 @@ return (
         )}
       </div>
 
-      {/* Result modal */}
       {result && (
         <div className="modal-overlay" onClick={() => setResult(null)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
