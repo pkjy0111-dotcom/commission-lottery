@@ -97,20 +97,25 @@ export default function Home() {
           const isSoldOut = prize.remaining === 0
 
           // Build ticket array
-          const allTickets = []
-          for (let i = 0; i < prize.total; i++) {
-            const isDrawn = i < drawn
-            allTickets.push(
-              <div key={i} className={`ticket ${isDrawn ? 'drawn' : ''}`}>
-                <div className="ticket-body">
-                  <div className="ticket-stripe-top" />
-                  <span className="ticket-number">{i + 1}</span>
-                  <span className="ticket-unit">번</span>
-                  <div className="ticket-stripe-bottom" />
-                </div>
-              </div>
-            )
-          }
+const allTickets = []
+for (let i = 0; i < prize.total; i++) {
+  const isDrawn = i < drawn
+  allTickets.push(
+    <div
+      key={i}
+      className={`ticket ${isDrawn ? 'drawn' : ''}`}
+      style={{ zIndex: prize.total - i }}
+    >
+      <div className="ticket-body">
+        <div className="ticket-stripe-top" />
+        <span className="ticket-number">{i + 1}</span>
+        <span className="ticket-unit">번</span>
+        <div className="ticket-stripe-bottom" />
+      </div>
+    </div>
+  )
+}
+
 
           // Split into rows of TICKETS_PER_ROW
           const rows = chunkArray(allTickets, TICKETS_PER_ROW)
