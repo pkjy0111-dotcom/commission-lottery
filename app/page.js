@@ -28,6 +28,16 @@ export default function Home() {
     fetchPrizes()
   }, [])
 
+  useEffect(() => {
+    if (flipping) {
+      const timer = setTimeout(() => {
+        setShowResult(true)
+        setFlipping(false)
+      }, 1500)
+      return () => clearTimeout(timer)
+    }
+  }, [flipping])
+
   async function fetchPrizes() {
     const res = await fetch('/api/prizes?t=' + Date.now(), { cache: 'no-store' })
     const data = await res.json()
@@ -57,17 +67,12 @@ export default function Home() {
         setLoading(false)
         return
       }
-            setResult(data)
+      setResult(data)
       setCode('')
       setFlipping(true)
-      setTimeout(async () => {
-        setShowResult(true)
-        setFlipping(false)
-        await fetchPrizes()
-      }, 1500)
+      setLoading(false)
     } catch (e) {
       setError('서버 오류가 발생했습니다.')
-    } finally {
       setLoading(false)
     }
   }
@@ -80,6 +85,7 @@ export default function Home() {
     setResult(null)
     setShowResult(false)
     setFlipping(false)
+    fetchPrizes()
   }
 
   function chunkArray(arr, size) {
