@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react'
 
 const GRADE_COLORS = {
-  A: '#e63946',
-  B: '#e63946',
-  C: '#d4548a',
-  D: '#3a86a8',
-  E: '#2a9d8f',
-  F: '#7b5ea7',
+  A: '#d42b2b',
+  B: '#d42b2b',
+  C: '#c44d8a',
+  D: '#3a7ea8',
+  E: '#2a8d7f',
+  F: '#8b6aad',
   G: '#c47daa',
   H: '#777',
 }
@@ -101,36 +101,30 @@ export default function Home() {
             tickets.push(
               <div key={i} className={`ticket ${isDrawn ? 'drawn' : ''}`}>
                 <div className="ticket-body">
+                  <div className="ticket-stripe-top" />
                   <span className="ticket-number">{i + 1}</span>
                   <span className="ticket-unit">번</span>
+                  <div className="ticket-stripe-bottom" />
                 </div>
               </div>
             )
           }
 
           return (
-            <div key={prize.grade}>
-              <div className={`prize-section ${isSoldOut ? 'sold-out-row' : ''}`}>
-                {/* 왼쪽: 상품 정보 */}
-                <div className="prize-left">
-                  <div className="prize-image-placeholder">[ 이미지 ]</div>
-                  <div className="prize-grade-label">
-                    <span className="prize-grade-letter" style={{ color: GRADE_COLORS[prize.grade] }}>
-                      {prize.grade}
-                    </span>
-                    <span>상</span>
-                  </div>
-                  <div className="prize-name">{prize.label}</div>
-                  <div className="prize-count-label">
-                    전 {prize.total}개
-                    {isSoldOut && ' — 종료'}
-                  </div>
+            <div className={`prize-section ${isSoldOut ? 'sold-out-row' : ''}`} key={prize.grade}>
+              <div className="prize-left">
+                <div className="prize-image-placeholder">[ 이미지 ]</div>
+                <div className="prize-grade-label">
+                  <span className="prize-grade-letter" style={{ color: GRADE_COLORS[prize.grade] }}>
+                    {prize.grade}
+                  </span>
+                  상
                 </div>
-
-                {/* 오른쪽: 복권 슬롯 */}
-                <div className="prize-right">
-                  {tickets}
-                </div>
+                <div className="prize-name">{prize.label}</div>
+                <div className="prize-count-label">전 {prize.total}개</div>
+              </div>
+              <div className="prize-right">
+                {tickets}
               </div>
             </div>
           )
@@ -181,13 +175,13 @@ export default function Home() {
         <div className="modal-overlay" onClick={() => setResult(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             {result.isLastOne && (
-              <div style={{ color: '#e63946', fontSize: '1rem', fontWeight: 700, marginBottom: 10 }}>
+              <div style={{ color: '#d42b2b', fontSize: '1rem', fontWeight: 700, marginBottom: 10 }}>
                 🏆 라스트원상 획득!
               </div>
             )}
             <div
               className="modal-grade"
-              style={{ color: GRADE_COLORS[result.grade] || '#7b5ea7' }}
+              style={{ color: GRADE_COLORS[result.grade] || '#8b6aad' }}
             >
               {result.grade}상
             </div>
