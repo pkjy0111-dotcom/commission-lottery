@@ -57,13 +57,13 @@ export default function Home() {
         setLoading(false)
         return
       }
-      setResult(data)
+            setResult(data)
       setCode('')
-      await fetchPrizes()
       setFlipping(true)
-      setTimeout(() => {
+      setTimeout(async () => {
         setShowResult(true)
         setFlipping(false)
+        await fetchPrizes()
       }, 1500)
     } catch (e) {
       setError('서버 오류가 발생했습니다.')
